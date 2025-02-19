@@ -1,9 +1,6 @@
 import Stripe from "stripe";
-import { NextApiRequest, NextApiResponse } from "next";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -12,6 +9,9 @@ export default async function handler(req, res) {
 
   try {
     const { priceId,email  } = req.body;
+
+    console.log(req.body);
+    
     if (!priceId) {
       return res.status(400).json({ error: "Price ID is required" });
     }
@@ -23,8 +23,8 @@ export default async function handler(req, res) {
       success_url: `${process.env.HOST}`,
       cancel_url: `${process.env.HOST}/profile`,
       metadata: {
-        email: email, // Replace with dynamic user email
-        plan: priceId, // Store the selected plan
+        email: email,
+        plan: priceId, 
       },
     });
     

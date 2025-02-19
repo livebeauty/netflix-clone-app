@@ -10,7 +10,7 @@ const stripePromise = loadStripe(process.env.stripe_public_key);
 export default function SubscribeButton({ priceId, currentPlan }) {
   const { user:session } = useAuth();
 
-  console.log(session);
+  // console.log(session);
   
 
   const [loading, setLoading] = useState(false);
